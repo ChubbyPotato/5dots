@@ -1,0 +1,194 @@
+.num1 {
+        font-family:Calibri;
+        background-color:#7189ea;
+        height: 100%;
+        width:100%;
+}
+
+#header {
+        font-size:120px;
+        text-align: center;
+        font-family:Calibri;
+        color:#03557E;
+}
+
+div{
+        display:inline-block;
+}
+
+.center {
+        display: flex;
+        justify-content: center;
+        text-align:center;
+        position:relative;
+        line-height: 3;
+        font-size:40px;
+        margin-top:-50px;
+        margin-right:10px;
+}
+
+.w {
+        background-color:white;
+        width:125px;
+        height:125px;
+        border:2px solid black;
+        border-radius:100%;
+        cursor: pointer;
+}
+
+.b {
+        background-color:Black;
+        color:White;
+        width:125px;
+        height:125px;
+        border:2px solid white;
+        border-radius:100%;
+        cursor: pointer;
+}
+
+.choice {
+        font-size:50px;
+        text-align:center;
+        line-height: 1.8;
+}
+
+#multi {
+        position:absolute;
+        left: 40%;
+        transform: translate(-80%,50%);
+        background-color:#E2F8FA;
+        border-radius:10%;
+        width:300px;
+        height:100px;
+        border:2px solid white;
+        cursor: pointer;
+}
+
+#comp {
+        position:absolute;
+        left: 60%;
+        transform: translate(-20%,50%);
+        background-color:#E2F8FA;
+        border-radius:10%;
+        width:300px;
+        height:100px;
+        border:2px solid white;
+        cursor: pointer;
+}
+
+.num2 {
+        font-family:Calibri;
+        background-color:#7189ea;
+        height: 100%;
+        width:100%;
+}
+
+.blwh {
+        font-size:50px;
+        text-align:center;
+        line-height: 1.8;
+}
+
+.bl {
+        position:absolute;
+        left: 60%;
+        top:50%;
+        transform: translate(-20%,-50%);
+        background-color:#E2F8FA;
+        border-radius:10%;
+        width:300px;
+        height:100px;
+        border:2px solid white;
+        cursor: pointer;
+}
+
+.wh {
+        position:absolute;
+        left: 40%;
+        top:50%;
+        transform: translate(-80%,-50%);
+        background-color:#E2F8FA;
+        border-radius:10%;
+        width:300px;
+        height:100px;
+        border:2px solid white;
+        cursor: pointer;
+}
+
+.tips{
+        font-family:Calibri;
+        background-color:#7189ea;
+        height: 100%;
+        width:100%;
+}
+
+#tip {
+        font-family:"Comic Sans MS";
+        color:#03557E;
+        font-size:120px;
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+}
+
+.back{
+        margin-top: 10px;
+        margin-left:10px;
+        cursor: pointer;
+}
+
+img{
+        width:20%;
+}
+
+.num3 {
+        background-color: #7189ea;
+        height: 100%;
+        width:100%;
+}
+
+td {
+        border: 1px solid;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border-radius:100%;
+        border-color: black;
+}
+
+table {
+       border-collapse: collapse;
+       position:fixed;
+       left:50%;
+       transform:translate(-50%,0);
+}
+
+.bwon{
+        height: 100%;
+        width:100%;
+        background-color:#7189ea;
+}
+
+.wwon{
+        height: 100%;
+        width:100%;
+        background-color:#7189ea;
+}
+
+.goback{
+        margin-top: 10px;
+        margin-left:10px;
+        cursor: pointer;
+        font-family: Calibri;
+        font-size:20px;
+}
+
+.WinnerWinnerChickenDinner{
+        font-family: Calibri;
+        font-size:120px;
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, 75%);
+}
