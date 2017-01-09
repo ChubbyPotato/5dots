@@ -54,8 +54,8 @@ div{
 
 #multi {
         position:absolute;
-        left: 40%;
-        transform: translate(-80%,50%);
+        left: 35%;
+        transform: translate(-50%,50%);
         background-color:#E2F8FA;
         border-radius:10%;
         width:300px;
@@ -129,6 +129,7 @@ div{
         position: absolute;
         left: 50%;
         margin-right: -50%;
+        top:50%;
         transform: translate(-50%, -50%)
 }
 
@@ -182,6 +183,7 @@ table {
         cursor: pointer;
         font-family: Calibri;
         font-size:20px;
+        display:inline-block;
 }
 
 .WinnerWinnerChickenDinner{
@@ -191,4 +193,49 @@ table {
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, 75%);
+}
+
+.topconfettiLL{
+        position:absolute;
+        right:40%;
+        transform: translate(50%, 0%);
+        width:100%;
+        height:100%;
+}
+
+.topconfettiL{
+        position:absolute;
+        right:20%;
+        transform: translate(50%, 0%);
+        width:100%;
+        height:100%;
+}
+
+.topconfettiM{
+        position:absolute;
+        right:0%;
+        transform: translate(50%, 0%);
+        width:100%;
+        height:100%;
+}
+
+.topconfettiR{
+        position:absolute;
+        right:-20%;
+        transform: translate(50%, 0%);
+        width:100%;
+        height:100%;
+}
+
+.GRALICBREAD{
+        display: flex;
+        justify-content: center;
+        text-align:center;
+        position:relative;
+}
+
+.white {
+        background-color: #7189ea;
+        height: 100%;
+        width:100%;
 }
