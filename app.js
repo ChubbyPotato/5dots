@@ -1,5 +1,10 @@
-var wwon=false;
-var bwon=false;
+function hasDuplicates(array, valueToCheck) {
+    return array.some(function(a, i) {
+        return a.every(function(ax, ix) {
+            return valueToCheck[ix] === ax;
+        })
+    });
+}
 
 function inGrid(grid, point) {
     for (var p = 0; p < grid.length; p++) {
@@ -128,6 +133,8 @@ $(document).ready(function() {
     $('.num2').hide();
     $('.tips').hide();
     $('.num3').hide();
+    $('.white').hide();
+    $('.black').hide();
 
     $('.w').mouseenter(function() {
         $(this).css("background-color","black");
@@ -188,6 +195,8 @@ $(document).ready(function() {
         var bla=[];
         var whi=[];
         var white=true;
+        var wwon=false;
+        var bwon=false;
     
         function generateGrid( rows, cols ) {
             var grid = "<table>";
@@ -265,59 +274,67 @@ $(document).ready(function() {
                         }
                     }
                 }
-                if (wwon=== true){
+                if (wwon==true){
                     $('.num3').hide();
                     $('.wwon').show();
+                    $('.goback').click(function(){
+                        $('.wwon').hide();
+                        $('.num1').show();
+                    });
                 }
             }
             
             
-             else {
+            else {
                 for (var count = 0; count < bla.length; count++) {
                     if (JSON.stringify(bla[count]) == JSON.stringify([row, col + 1])) {
                         if (continueStrand(bla, [[row, col], [row, col + 1]], "left") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row, col - 1])) {
                         if (continueStrand(bla, [[row, col], [row, col - 1]], "right") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row + 1, col])) {
                         if (continueStrand(bla, [[row, col], [row + 1, col]], "up") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row - 1, col])) {
                         if (continueStrand(bla, [[row, col], [row - 1, col]], "down") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row + 1, col + 1])) {
                         if (continueStrand(bla, [[row, col], [row + 1, col + 1]], "diagonal_up_left") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row - 1, col + 1])) {
                         if (continueStrand(bla, [[row, col], [row - 1, col + 1]], "diagonal_down_left") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row + 1, col - 1])) {
                         if (continueStrand(bla, [[row, col], [row + 1, col - 1]], "diagonal_up_right") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                     else if (JSON.stringify(bla[count]) == JSON.stringify([row - 1, col - 1])) {
                         if (continueStrand(bla, [[row, col], [row - 1, col - 1]], "diagonal_down_right") == 3) {
-                            var bwon= true;
+                            var bwon=true;
                         }
                     }
                 }
-                if (bwon === true){
+                if (bwon==true){
                     $('.num3').hide();
                     $('.bwon').show();
+                    $('.goback').click(function(){
+                        $('.bwon').hide();
+                        $('.num1').show();
+                    });
                 }
             }
 
@@ -325,6 +342,7 @@ $(document).ready(function() {
 
             $td.css('background-color', white ? 'white' : 'black');
             white = !white;
+
         });
 
         $('.back').click(function(){
@@ -341,6 +359,8 @@ $(document).ready(function() {
     $('#comp').mouseleave(function() {
         $(this).css("background-color","E2F8FA");
     });
+
+
 
 
     $('#comp').click(function() {
@@ -368,27 +388,327 @@ $(document).ready(function() {
             $(this).css("background-color","E2F8FA");
         });
 
-
         $('.wh').click(function(){
+            var turn=1;
             $('.num2').hide();
-            $('.num3').show();
+            $('.white').show();
+            function generateGrid( rows, cols ) {
+                var grid = "<table>";
+                for ( row = 1; row <= rows; row++ ) {
+                    grid += "<tr>"; 
+                    for ( col = 1; col <= cols; col++ ) {      
+                        grid += "<td></td>";
+                    }
+                    grid += "</tr>";
+                }
+                return grid;
+            }
+    
+        
+            $( "#tableContainerW" ).html( generateGrid(32, 32) );
+            
+            $( "td" ).click(function() {
+                $( this ).css( 'background-color', 'white' );
+                var white = true;
+                var playerW=[];
+                var computer=[];
+                var compwin=false;
+                var Wplawin=false;
+                
+                
+                $(this).css('cursor','default');
+                var index = $( "td" ).index( this );
+                var row = Math.floor( ( index ) / 32) + 1;
+                var col = ( index % 32) + 1;
+                var $td = $(this);
+                
+                if ($td.data('clicked')) {
+                    return;
+                }
+                
+                if (white == true){
+                    playerW.push([row, col]);
+                }
+                
+                var arow=row-1;
+                var acol=col-1;
+                var arowD=arow+1;
+                var arowU=arow-1;
+                var acolR=acol+1;
+                var acolL=acol-1;
+                
+                if (turn===1){
+                    $("tr:eq(" + 1 + ") td:eq(" + 1 + " )").css( 'background-color', 'black' )
+                    $("tr:eq(" + 2 + ") td:eq(" + 2 + " )").css( 'background-color', 'black' )
+                    $("tr:eq(" + 3 + ") td:eq(" + 3 + " )").css( 'background-color', 'black' )
+                    $("tr:eq(" + 4 + ") td:eq(" + 4 + " )").css( 'background-color', 'black' )
+                    $("tr:eq(" + 5 + ") td:eq(" + 5 + " )").css( 'background-color', 'black' )
+                    white=true;
+                    computer.push([arowD+1,acol+1]);
+                    turn=turn+1;
+                    
+                }
+                if(turn===2){
+                    console.log(computer);
+                    var wat= computer[0];
+                    var wat1 = [wat[0]-1,wat[0]-1];
+                    if (hasDuplicates(playerW, wat1)===false){
+                        console.log("YAS")
+                        $("tr:eq(" + wat[0]-2+ ") td:eq(" + wat[1]-2 + " )").css( 'background-color', 'black' )
+                    }
+                    else{
+                        $("tr:eq(" + wat[0]-2+ ") td:eq(" + wat[1]-2 + " )").css( 'background-color', 'black' )
+                    }
+                    white=true;
+                }
+
+                if (white === true) {
+                    turn=turn+1;
+                    white=false;
+                    
+                    for (var count = 0; count < playerW.length; count++) {
+                        if (JSON.stringify(playerW[count]) == JSON.stringify([row, col + 1])) {
+                            if (continueStrand(playerW, [[row, col], [row, col + 1]], "left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row, col - 1])) {
+                            if (continueStrand(playerW, [[row, col], [row, col - 1]], "right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row + 1, col])) {
+                            if (continueStrand(playerW, [[row, col], [row + 1, col]], "up") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row - 1, col])) {
+                            if (continueStrand(playerW, [[row, col], [row - 1, col]], "down") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row + 1, col + 1])) {
+                            if (continueStrand(playerW, [[row, col], [row + 1, col + 1]], "diagonal_up_left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row - 1, col + 1])) {
+                            if (continueStrand(playerW, [[row, col], [row - 1, col + 1]], "diagonal_down_left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row + 1, col - 1])) {
+                            if (continueStrand(playerW, [[row, col], [row + 1, col - 1]], "diagonal_up_right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerW[count]) == JSON.stringify([row - 1, col - 1])) {
+                            if (continueStrand(playerW, [[row, col], [row - 1, col - 1]], "diagonal_down_right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                    }
+                }
+                
+                if (white==false) {
+                    for (var count = 0; count < computer.length; count++) {
+                        if (JSON.stringify(computer[count]) == JSON.stringify([row, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row, col + 1]], "left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row, col - 1]], "right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col]], "up") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col]], "down") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col + 1]], "diagonal_up_left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col + 1]], "diagonal_down_left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col - 1]], "diagonal_up_right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col - 1]], "diagonal_down_right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                    }
+                }
+            });
+
             $('.back').click(function(){
                 $('.num1').show();
-                $('.num3').hide();
+                $('.white').hide();
             });
         });
+
 
 
         $('.bl').click(function(){
+            var black = false;
+            var playerB=[];
+            var computer=[];
+            var compwin=false;
+            var Bplawin=false;
+            
+            
             $('.num2').hide();
-            $('.num3').show();
+            $('.white').show();
+            function generateGrid( rows, cols ) {
+                var grid = "<table>";
+                for ( row = 1; row <= rows; row++ ) {
+                    grid += "<tr>"; 
+                    for ( col = 1; col <= cols; col++ ) {      
+                        grid += "<td></td>";
+                    }
+                    grid += "</tr>";
+                }
+                return grid;
+            }
+    
+        
+            $( "#tableContainerW" ).html( generateGrid(32, 32) );
+            
+            
+            $( "td" ).click(function() {
+                $(this).css('cursor','default');
+                var index = $( "td" ).index( this );
+                var row = Math.floor( ( index ) / 32) + 1;
+                var col = ( index % 32) + 1;
+                var $td = $(this);
+    
+                if ($td.data('clicked')) {
+                    return;
+                }
+                
+                if (black == true){
+                    playerB.push([row, col]);
+                } else {
+                    computer.push([row, col]);
+                }
+    
+                $td.data('clicked', true);
+    
+                $td.css('background-color',  black? 'white' : 'black');
+                black = !black;
+                
+                
+                if (black === true) {
+                    for (var count = 0; count < playerB.length; count++) {
+                        if (JSON.stringify(playerB[count]) == JSON.stringify([row, col + 1])) {
+                            if (continueStrand(playerB, [[row, col], [row, col + 1]], "left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row, col - 1])) {
+                            if (continueStrand(playerB, [[row, col], [row, col - 1]], "right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row + 1, col])) {
+                            if (continueStrand(playerB, [[row, col], [row + 1, col]], "up") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row - 1, col])) {
+                            if (continueStrand(playerB, [[row, col], [row - 1, col]], "down") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row + 1, col + 1])) {
+                            if (continueStrand(playerB, [[row, col], [row + 1, col + 1]], "diagonal_up_left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row - 1, col + 1])) {
+                            if (continueStrand(playerB, [[row, col], [row - 1, col + 1]], "diagonal_down_left") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row + 1, col - 1])) {
+                            if (continueStrand(playerB, [[row, col], [row + 1, col - 1]], "diagonal_up_right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                        else if (JSON.stringify(playerB[count]) == JSON.stringify([row - 1, col - 1])) {
+                            if (continueStrand(playerB, [[row, col], [row - 1, col - 1]], "diagonal_down_right") == 3) {
+                                var Wplawin=true;
+                            }
+                        }
+                    }
+                }
+                
+                
+                 else {
+                    for (var count = 0; count < computer.length; count++) {
+                        if (JSON.stringify(computer[count]) == JSON.stringify([row, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row, col + 1]], "left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row, col - 1]], "right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col]], "up") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col]], "down") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col + 1]], "diagonal_up_left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col + 1])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col + 1]], "diagonal_down_left") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row + 1, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row + 1, col - 1]], "diagonal_up_right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                        else if (JSON.stringify(computer[count]) == JSON.stringify([row - 1, col - 1])) {
+                            if (continueStrand(computer, [[row, col], [row - 1, col - 1]], "diagonal_down_right") == 3) {
+                                var compwin=true;
+                            }
+                        }
+                    }
+                }
+            });
 
             $('.back').click(function(){
-                $('.num3').hide();
                 $('.num1').show();
+                $('.white').hide();
             });
         });
-        
     });
-
 });
